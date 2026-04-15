@@ -1,0 +1,2 @@
+{"question":"What is the password reset policy?","answer":"Users must reset through the IT portal.","contexts":["Password reset requests are handled through the IT portal."],"ground_truth":"Users must reset through the IT portal."}
+{"question":"How are documents classified?","answer":"They are classified by sensitivity and department.","contexts":["Documents are classified by sensitivity and department."],"ground_truth":"They are classified by sensitivity and department."}

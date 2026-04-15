@@ -1,0 +1,4 @@
+[
+  {"query": "What is the password reset policy?", "expected": "Users reset passwords through IT portal."},
+  {"query": "How long are documents retained?", "expected": "Retention depends on document type."}
+]
