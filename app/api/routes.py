@@ -45,7 +45,7 @@ def rebuild_indexes(chunks):
 
 @router.post("/ingest", response_model=IngestResponse)
 async def ingest(files: List[UploadFile] = File(...)):
-    print("🔥 INGEST CALLED")  # ✅ ADD THIS
+    print("🔥 INGEST CALLED")
     ensure_dirs(settings.raw_dir, settings.chunk_dir, "data/index")
     all_chunks = []
 
