@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+from typing import List
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from app.schemas import IngestResponse, QueryRequest, QueryResponse
 from app.ingestion.store import save_raw_file, save_chunks
@@ -13,6 +13,7 @@ from app.reranker.bge_reranker import BGEReranker
 from app.generation.answerer import Answerer
 from app.orchestration.graph import build_graph
 from app.utils import ensure_dirs
+
 
 router = APIRouter()
 settings = get_settings()
@@ -43,7 +44,8 @@ def rebuild_indexes(chunks):
 
 
 @router.post("/ingest", response_model=IngestResponse)
-async def ingest(files: list[UploadFile] = File(...)):
+async def ingest(files: List[UploadFile] = File(...)):
+    print("🔥 INGEST CALLED")  # ✅ ADD THIS
     ensure_dirs(settings.raw_dir, settings.chunk_dir, "data/index")
     all_chunks = []
 
@@ -70,10 +72,15 @@ async def ingest(files: list[UploadFile] = File(...)):
 
 @router.post("/query", response_model=QueryResponse)
 async def query(req: QueryRequest):
+
+    print("GRAPH status:", GRAPH)   # ✅ ADD HERE
+
     if GRAPH is None:
         raise HTTPException(status_code=400, detail="No index found. Ingest documents first.")
+
     result = GRAPH.invoke({"query": req.query})
     chunks = [c for c, _ in result["reranked"]]
+
     return ANSWERER.answer(req.query, chunks, model=req.model)
 
 
